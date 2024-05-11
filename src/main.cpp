@@ -191,10 +191,6 @@ static void OnRxDone(uint8_t *payload, uint16_t size, int16_t rssi, int8_t snr)
         
     /* Now we are ready to decode the message. */
     if (pb_decode(&stream, LoraPayload_fields, &loraPayload)) {
-        if (prevPacketId == 0) {
-            prevPacketId = loraPayload.id;
-        }
-
         if (loraPayload.id != prevPacketId) {
             if (loraPayload.id > (prevPacketId + 1)) {
                 ++errorCount;
