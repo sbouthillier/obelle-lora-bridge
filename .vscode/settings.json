@@ -1,4 +1,11 @@
 {
     "DockerRun.DisableAutoGenerateConfig": true,
-    "cmake.configureOnOpen": false
+    "cmake.configureOnOpen": false,
+    "sonarlint.pathToCompileCommands": "${workspaceFolder}/compile_commands.json",
+    "files.associations": {
+        "array": "cpp",
+        "string": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled",
+    "C_Cpp.lineTooLong": "disabled",
 }
