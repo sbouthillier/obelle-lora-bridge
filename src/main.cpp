@@ -168,14 +168,16 @@ const String tempPath {"/temperature"};
 // JSON object to save sensor readings and timestamp
 static FirebaseJson json;
 
-static bool signupOK = false;
+static bool signupOK {false};
 
-static uint32_t prevPacketId = 0;
-static uint32_t errorCount = 0;
+static uint32_t prevPacketId {0};
+static uint32_t errorCount {0};
 
-static bool lora_idle = true;
+static bool lora_idle {true};
 
 static QueueHandle_t eventQueue;
+
+static uint32_t lastTime {0};
 
 //----------------------------------------------------------------
 // Display
@@ -316,6 +318,17 @@ void loop() {
     }
 
     Radio.IrqProcess();
+
+    if (millis() - lastTime > 20000) {
+        lastTime = millis();
+
+        if (Firebase.isTokenExpired()) {
+            Serial.println("Firebase token expired, refreshing...");
+            Firebase.refreshToken(&config);
+        } else {
+            Firebase.ready();
+        }
+    }
 }
 
 /**
